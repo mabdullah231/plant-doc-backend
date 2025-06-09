@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OpenAIConfigController;
 use App\Http\Controllers\PlantTypeController;
-use App\Http\Controllers\QuestionController;
+
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
@@ -44,19 +43,6 @@ Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function ()
         Route::get('/{id?}', [PlantTypeController::class, 'viewPlantType']);
     });
 
-    // Question Routes
-    // Route::prefix('questions')->group(function () {
-    //     Route::post('/manage', [QuestionController::class, 'manageQuestion']);
-    //     Route::delete('/{id}', [QuestionController::class, 'deleteQuestion']);
-    //     Route::get('/plant-type/{plantTypeId}', [QuestionController::class, 'viewQuestion']);
-    // });
-
-    // // Answer Routes
-    // Route::prefix('answers')->group(function () {
-    //     Route::post('/manage', [AnswerController::class, 'manageAnswer']);
-    //     Route::delete('/{id}', [AnswerController::class, 'deleteAnswer']);
-    //     Route::get('/question/{questionId}', [AnswerController::class, 'viewAnswer']); // Updated route
-    // });
     Route::prefix('questionnaire')->group(function () {
         Route::post('/manage', [QuestionnaireController::class, 'storeOrUpdateQuestionnaire']); // Add/Update
         Route::delete('/{plantTypeId}', [QuestionnaireController::class, 'deleteQuestionnaire']); // Delete entire questionnaire
@@ -98,4 +84,6 @@ Route::middleware(['auth:sanctum', 'user'])->prefix('user')->group(function () {
         Route::delete('delete/{id}', [UserReportController::class, 'deleteUserReport']);
     });
     Route::get('/stats', [StatsController::class, 'userStats']);
+    Route::get('/details', [UserController::class, 'getUserDetails']);
+    Route::put('/update', [UserController::class, 'updateUserDetails']);
 });
